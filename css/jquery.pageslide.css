@@ -1,0 +1,56 @@
+
+#pageslide {
+    /* These styles MUST be included. Do not change. */
+    display: none;
+    position: absolute;
+    position: fixed;
+    top: 0;
+    height: 100%;
+    z-index: 56;
+    
+    /* Specify the width of your pageslide here */
+ /*   width: 200px;*/
+    padding: 10px;
+    
+    /* These styles are optional, and describe how the pageslide will look */
+    background-color: #e6e6e6;
+    color: #000;
+    -webkit-box-shadow: inset 0 0 30px 1px #ccc;
+    -moz-shadow: inset 0 0 30px 1px #ccc;
+    box-shadow: inset 0 0 30px 1px #ccc;
+}
+
+
+@media screen and (max-width:767px){
+
+	 #slidecontent a {
+		font-size: 10px;
+	 }
+
+	.sub_content{
+		font-size: 7px;
+	}
+}
+
+
+@media screen and (min-width:768px){
+  #pageslide {
+	width:260px;
+    padding: 20px;
+  }
+
+	#slidecontent a {
+		font-size: 18px;
+	 }
+
+
+	.sub_content{
+		font-size: 15px;
+	}
+}
+ 
+
+	#slidecontent { display: none; }
+ 
+	#slidecontent a {  color: #333; font-weight: bold; padding: 5px 5px; border: none; text-decoration:none;}
+    #slidecontent a:hover { background: #aaa; } 

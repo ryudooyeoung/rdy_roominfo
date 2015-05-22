@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>    
+
+<!DOCTYPE sqlMap      
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+	<sqlMap namespace="Members">
+		
+		<!-- R E S U L T   M A P S -->
+		
+		<resultMap id="fullResult"			class="">
+			<result property="member_id" column="member_id" />
+			<result property="passwd" column="passwd" />
+			<result property="phone" column="phone" />
+			<result property="authority" column="authority" />
+		</resultMap>
+
+		<!--  Q U E R I E S  -->
+
+		<!--<insert id="insert">
+			INSERT INTO `members` (`city`,`state_id`)
+				VALUES (#city#,#stateId#)
+			<selectKey resultClass="int" keyProperty="id">
+   				SELECT LAST_INSERT_ID() AS id;
+ 			</selectKey>
+		</insert>-->
+
+
+		<insert id="insert">
+			INSERT INTO `members` (`member_id`,`passwd`,`phone`)
+				VALUES (#member_id#, #passwd#,#phone#)
+			<selectKey resultClass="int" keyProperty="id">
+   				SELECT LAST_INSERT_ID() AS id;
+ 			</selectKey>
+		</insert>
+
+
+		<update id="update">
+			UPDATE `members` SET
+				`passwd`=#passwd#,
+				`phone`=#phone#
+				WHERE `member_id`=#member_id#;
+		</update>
+
+		<delete id="delete">
+			DELETE FROM `members`
+				WHERE `member_id`=#member_id#;
+		</delete>
+
+		<select id="select"	parameterClass="int" resultMap="fullResult">
+			SELECT * FROM `members` WHERE `member_id`=#member_id#;
+		</select>
+		
+		<!--
+		<select id="selectAll"
+			parameterClass="array"
+			resultMap="fullResult">
+			SELECT *
+				FROM `cities`
+				<iterate prepend="WHERE `city_id` IN " property="idList" open="(" close=")" conjunction=",">
+					#idList[]#
+				</iterate>
+				<isPropertyAvailable property="sort">
+					ORDER BY $sort$ $sortDir$
+				</isPropertyAvailable>
+		</select>-->
+
+		<select id="selectAll" resultMap="fullResult">
+			SELECT *
+				FROM `members`
+		</select>
+
+
+ 
+	</sqlMap>

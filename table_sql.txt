@@ -1,0 +1,100 @@
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `addrequest`
+--
+
+CREATE TABLE IF NOT EXISTS `addrequest` (
+  `addrequest_id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `address` varchar(150) CHARACTER SET utf8 NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `phone` varchar(50) NOT NULL,
+  `tworoom` tinyint(1) NOT NULL,
+  `duplex` tinyint(1) NOT NULL,
+  `emptyone` int(11) NOT NULL,
+  `emptyduplex` int(11) NOT NULL,
+  `emptytworoom` int(11) NOT NULL,
+  `spacious` varchar(30) NOT NULL,
+  `ubill` varchar(50) NOT NULL,
+  `charter` int(11) NOT NULL,
+  `deposit` int(11) NOT NULL,
+  `monthlyrent` int(11) NOT NULL,
+  `gas` tinyint(1) NOT NULL,
+  `miel` tinyint(1) NOT NULL,
+  `aircon` tinyint(1) NOT NULL,
+  `etc` varchar(150) NOT NULL,
+  `img` varchar(30) NOT NULL,
+  `member_id` varchar(50) NOT NULL,
+  PRIMARY KEY (`addrequest_id`),
+  KEY `member_id` (`member_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=euckr AUTO_INCREMENT=31 ;
+
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `basket`
+--
+
+CREATE TABLE IF NOT EXISTS `basket` (
+  `member_id` varchar(50) DEFAULT NULL,
+  `room_id` mediumint(9) DEFAULT NULL,
+  KEY `member_id` (`member_id`),
+  KEY `room_id` (`room_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=euckr;
+
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `evaluation`
+--
+
+CREATE TABLE IF NOT EXISTS `evaluation` (
+  `member_id` varchar(50) NOT NULL,
+  `room_id` mediumint(9) NOT NULL,
+  `soundproof` int(11) NOT NULL,
+  `access` int(11) NOT NULL,
+  `facility` int(11) NOT NULL,
+  `security` int(11) NOT NULL,
+  `clean` int(11) NOT NULL,
+  KEY `member_id` (`member_id`),
+  KEY `room_id` (`room_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=euckr;
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `manage`
+--
+
+CREATE TABLE IF NOT EXISTS `manage` (
+  `member_id` varchar(50) NOT NULL,
+  `room_id` mediumint(9) NOT NULL,
+  KEY `member_id` (`member_id`),
+  KEY `room_id` (`room_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=euckr;
+
+
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `members`
+--
+
+CREATE TABLE IF NOT EXISTS `members` (
+  `member_id` varchar(50) NOT NULL,
+  `passwd` varchar(50) NOT NULL,
+  `phone` varchar(50) NOT NULL,
+  `authority` varchar(50) NOT NULL DEFAULT 'common',
+  PRIMARY KEY (`member_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=euckr;
+
+--
+-- 테이블의 덤프 데이터 `members`
+--
+
+INSERT INTO `members` (`member_id`, `passwd`, `phone`, `authority`) VALUES
+('admin', '1234', '12345', 'admin'), 
+('superadmin', '1', '1', 'superadmin');

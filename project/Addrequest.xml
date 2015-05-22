@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>    
+
+<!DOCTYPE sqlMap      
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+	<sqlMap namespace="Addrequest">
+		
+		<!-- R E S U L T   M A P S -->
+		
+		<resultMap id="fullResult"			class="">
+			<result property="addrequest_id" column="addrequest_id" />
+			<result property="address" column="address" />
+			<result property="name" column="name" />
+			<result property="phone" column="phone" />
+			<result property="tworoom" column="tworoom" />
+			<result property="duplex" column="duplex" />
+			<result property="emptyone" column="emptyone" />
+			<result property="emptyduplex" column="emptyduplex" />
+			<result property="emptytworoom" column="emptytworoom" />
+			<result property="spacious" column="spacious" />
+			<result property="ubill" column="ubill" />
+			<result property="charter" column="charter" />
+			<result property="deposit" column="deposit" />
+			<result property="monthlyrent" column="monthlyrent" />
+			<result property="gas" column="gas" />
+			<result property="miel" column="miel" />
+			<result property="aircon" column="aircon" />
+			<result property="etc" column="etc" />
+			<result property="img" column="img" />
+			<result property="member_id" column="member_id" />
+		</resultMap>
+
+		<!--  Q U E R I E S  -->
+
+		<!--<insert id="insert">
+			INSERT INTO `addrequest` (`city`,`state_id`)
+				VALUES (#city#,#stateId#)
+			<selectKey resultClass="int" keyProperty="id">
+   				SELECT LAST_INSERT_ID() AS id;
+ 			</selectKey>
+		</insert>-->
+
+
+		<insert id="insert" parameterClass="array">
+			INSERT INTO `addrequest` (`address`,`name`,`phone`,`tworoom`,`duplex`,`emptyone`,`emptyduplex`,`emptytworoom`,`spacious`,`ubill`,`charter`,`deposit`,`monthlyrent`,`gas`,`miel`,`aircon`,`etc`,`img`,`member_id`)
+				VALUES (#address#,#name#,#phone#,#tworoom#,#duplex#,#emptyone#,#emptyduplex#,#emptytworoom#,#spacious#,#ubill#,#charter#,#deposit#,#monthlyrent#,#gas#,#miel#,#aircon#,#etc#,#img#, #member_id#)
+			<selectKey resultClass="int" keyProperty="id">
+   				SELECT LAST_INSERT_ID() AS id;
+ 			</selectKey>
+		</insert>
+
+
+		<update id="update" parameterClass="array">
+			UPDATE `addrequest` SET
+				`address`=#address#,
+				`name`=#name#,
+				`phone`=#phone#,
+				`tworoom`=#tworoom#,
+				`duplex`=#duplex#,
+				`emptyone`=#emptyone#,
+				`emptyduplex`=#emptyduplex#,
+				`emptytworoom`=#emptytworoom#,
+				`spacious`=#spacious#,
+				`ubill`=#ubill#,
+				`charter`=#charter#,
+				`deposit`=#deposit#,
+				`monthlyrent`=#monthlyrent#,
+				`gas`=#gas#,
+				`miel`=#miel#,
+				`aircon`=#aircon#,
+				`etc`=#etc#,
+				`img`=#img#,
+				`member_id`=#member_id#
+				WHERE `addrequest_id`=#addrequest_id#;
+		</update>
+
+		<delete id="delete">
+			DELETE FROM `addrequest`
+				WHERE `addrequest_id` = #addrequest_id#;
+		</delete>
+
+		<select id="selectI"	parameterClass="int" resultMap="fullResult">
+			SELECT * FROM `addrequest` WHERE `addrequest_id` = #addrequest_id#;
+		</select>
+
+		<select id="selectM"	parameterClass="String" resultMap="fullResult">
+			SELECT * FROM `addrequest` WHERE `member_id` LIKE #member_id#;
+		</select>
+
+		<select id="selectIM"	parameterClass="array" resultMap="fullResult">
+			SELECT * FROM `addrequest` WHERE `member_id` LIKE #member_id# and `addrequest_id` = #addrequest_id#;
+		</select>
+		
+		<!--
+		<select id="selectAll"
+			parameterClass="array"
+			resultMap="fullResult">
+			SELECT *
+				FROM `cities`
+				<iterate prepend="WHERE `city_id` IN " property="idList" open="(" close=")" conjunction=",">
+					#idList[]#
+				</iterate>
+				<isPropertyAvailable property="sort">
+					ORDER BY $sort$ $sortDir$
+				</isPropertyAvailable>
+		</select>-->
+
+		<select id="selectAll" resultMap="fullResult">
+			SELECT *
+				FROM `addrequest`
+		</select>
+
+		<select id="selectCon" parameterClass="array" resultMap="fullResult">
+			SELECT *
+				FROM $tablename$
+				<dynamic prepend="WHERE">
+					<isPropertyAvailable property="deposit" prepend="AND">
+						`deposit` $depositop$  #deposit#
+					</isPropertyAvailable>
+					<isPropertyAvailable property="monthlyrent" prepend="AND">
+						`monthlyrent`  $monthlyrentop$ #monthlyrent#
+					</isPropertyAvailable>
+ 					<isPropertyAvailable property="gas" prepend="AND">
+						`gas` = #gas#
+					</isPropertyAvailable>
+					<isPropertyAvailable property="miel" prepend="AND">
+						`miel`  = #miel#
+					</isPropertyAvailable>
+						<isPropertyAvailable property="aircon" prepend="AND">
+						`aircon` =  #aircon#
+					</isPropertyAvailable>
+				</dynamic>
+
+		</select>
+
+
+		
+		<select id="selectAllForState"
+			parameterClass="array"
+			resultMap="fullResult">
+			SELECT *
+				FROM `cities`
+				<isPropertyAvailable property="stateName">
+					LEFT JOIN `states` ON `cities`.`state_id`=`states`.`state_id`
+				</isPropertyAvailable>
+				<dynamic prepend="WHERE">
+					<isPropertyAvailable property="stateId" prepend="AND">
+						`state_id`=#stateId#
+					</isPropertyAvailable>
+					<isPropertyAvailable property="name" prepend="AND">
+						`city` LIKE #name#
+					</isPropertyAvailable>
+					<isPropertyAvailable property="stateName" prepend="AND">
+						`state` LIKE #stateName#
+					</isPropertyAvailable>
+				</dynamic>
+		</select>
+	</sqlMap>
